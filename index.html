@@ -1,0 +1,318 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>김정민 감독 소개 1문 1답</title>
+    <!-- NOTE: 필모그래피의 '거울 속의 시간' 날짜를 상세 정보(2023-07-25)에 맞춰 2023-07-25로 통일했습니다. -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa; color: #333; line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff; padding: 60px 20px; text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
+        header p { font-size: 1.2em; opacity: 0.95; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .tabs {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 0;
+            border-bottom: 3px solid #ddd; overflow-x: auto; padding-bottom: 0;
+        }
+        .tab {
+            padding: 15px 25px; background: #fff; border: none; cursor: pointer;
+            font-size: 16px; font-weight: 500; border-radius: 8px 8px 0 0;
+            transition: all 0.3s; white-space: nowrap; border: 2px solid transparent; border-bottom: none;
+        }
+        .tab:hover { background: #f0f0f0; transform: translateY(-2px); }
+        .tab.active { background: #667eea; color: #fff; border-color: #667eea; }
+        .tab-content {
+            display: none; background: #fff; padding: 40px; border-radius: 0 15px 15px 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;
+        }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
+        .tab-content h2 { font-size: 1.8em; margin-bottom: 30px; color: #2c3e50; }
+        .tab-content h3 { font-size: 1.3em; margin: 25px 0 15px; color: #34495e; }
+        .tab-content ul { margin-left: 25px; margin-top: 15px; }
+        .tab-content li { margin-bottom: 10px; }
+        .columns { display: grid; gap: 30px; margin: 30px 0; }
+        .columns-2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+        .columns-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .columns-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .info-box, .success-box, .warning-box, .error-box { padding: 25px; border-radius: 12px; }
+        .info-box { background: #e7f3ff; border-left: 4px solid #2196f3; }
+        .success-box { background: #d4edda; border-left: 4px solid #28a745; }
+        .warning-box { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .error-box { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .metric {
+            text-align: center; padding: 20px; background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;
+        }
+        .metric-value { font-size: 2.5em; font-weight: 700; color: #667eea; margin-bottom: 5px; }
+        .metric-label { font-size: 1em; color: #666; }
+        .metric-delta { font-size: 0.9em; color: #28a745; margin-top: 5px; }
+        .progress { background: #e9ecef; border-radius: 10px; height: 30px; margin: 15px 0; overflow: hidden; position: relative; }
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea, #764ba2); height: 100%;
+            display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; transition: width 0.6s ease;
+        }
+        footer { background: #2c3e50; color: #fff; text-align: center; padding: 30px 20px; margin-top: 60px; }
+        footer p { margin: 5px 0; }
+        #did-agent { position: fixed !important; bottom: 20px !important; right: 20px !important; z-index: 9999 !important; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            .tab { padding: 10px 15px; font-size: 14px; }
+            .tab-content { padding: 20px; }
+            .columns, .columns-2, .columns-3, .columns-4 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎬 김정민 감독 소개 1문 1답</h1>
+        <p>프로필 · 필모그래피 · 작품 세계</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="openTab('tab1')">프로필</button>
+            <button class="tab" onclick="openTab('tab2')">필모그래피</button>
+            <button class="tab" onclick="openTab('tab3')">거울 속의 시간 · 정보</button>
+            <button class="tab" onclick="openTab('tab4')">거울 속의 시간 · 줄거리</button>
+            <button class="tab" onclick="openTab('tab5')">거울 속의 시간 · 해석</button>
+            <button class="tab" onclick="openTab('tab6')">거울 속의 시간 · 평론</button>
+            <button class="tab" onclick="openTab('tab7')">언캐니 · 정보</button>
+            <button class="tab" onclick="openTab('tab8')">언캐니 · 줄거리</button>
+            <button class="tab" onclick="openTab('tab9')">언캐니 · 해석</button>
+            <button class="tab" onclick="openTab('tab10')">언캐니 · 평론</button>
+        </div>
+
+        <!-- 탭 1: 프로필 -->
+        <div id="tab1" class="tab-content active">
+            <h2>👤 김정민 감독 프로필</h2>
+            <div class="columns columns-2">
+                <div class="info-box">
+                    <strong>학력/전공</strong><br />
+                    차의과학대학교 심리학, 미디어커뮤니케이션 전공
+                </div>
+                <div class="success-box">
+                    <strong>창작 성향</strong><br />
+                    예술 영화 애호가로서 이론 기반 시나리오 집필 및 일상 소재의 실험 영화 제작에 주력
+                </div>
+            </div>
+            <div class="columns columns-2">
+                <div class="warning-box">
+                    <strong>데뷔/주목</strong><br />
+                    22세에 영화 <em>거울 속의 시간</em> 발표로 주목
+                </div>
+                <div class="error-box">
+                    <strong>최근 행보</strong><br />
+                    신작 <em>언캐니</em> 개봉으로 명성 확장 중
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 2: 필모그래피 -->
+        <div id="tab2" class="tab-content">
+            <h2>🎞️ 김정민 감독 필모그래피</h2>
+            <div class="columns columns-2">
+                <div class="info-box">
+                    <strong>작품 목록</strong><br />
+                    • 2023. 07. 25. 영화 <em>거울 속의 시간</em><br />
+                    • 2025. 11. 01. 영화 <em>언캐니</em>
+                </div>
+                <div class="success-box">
+                    <strong>주요 키워드</strong><br />
+                    자기 성찰 · 시간/기억 · 일상 속 낯섦(언캐니) · 미니멀리즘
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 3: 거울 속의 시간 정보 -->
+        <div id="tab3" class="tab-content">
+            <h2>🪞 영화 <em>거울 속의 시간</em> 정보</h2>
+            <div class="columns columns-3">
+                <div class="info-box">
+                    <strong>기본 정보</strong><br />
+                    대한민국 제작 · 예술·철학 드라마<br />
+                    러닝타임 65분 (단편)
+                </div>
+                <div class="success-box">
+                    <strong>개봉/성과</strong><br />
+                    2023년 7월 25일 개봉<br />
+                    평점 8.7점 · 누적 관객 12,340명
+                </div>
+                <div class="warning-box">
+                    <strong>제작진/출연</strong><br />
+                    감독: 김정민<br />
+                    출연: 한지윤(미래), 박도현(준호), 김서하(유진)
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 4: 거울 속의 시간 줄거리 -->
+        <div id="tab4" class="tab-content">
+            <h2>📖 영화 <em>거울 속의 시간</em> 줄거리</h2>
+            <div class="info-box">
+                오래된 집 다락에서 깨진 거울을 발견한 ‘미래’는 거울 속 미묘히 다른 시간대의 ‘자신’을 마주한다.
+                매일 밤 이어지는 짧은 대화 속 질문—“너는 무엇을 두려워하고 있는가?”—은 과거 연인 준호, 친구 유진과의
+                관계를 다시 비추게 한다. 사건 중심 전개 대신 정적인 공간과 시간의 변화로 내면의 사유를 따라가게 하며,
+                마지막에 미래는 거울을 깨고 현재의 삶으로 걸어 들어간다.
+            </div>
+        </div>
+
+        <!-- 탭 5: 거울 속의 시간 해석 -->
+        <div id="tab5" class="tab-content">
+            <h2>🧠 영화 <em>거울 속의 시간</em> 해석</h2>
+            <div class="columns columns-2">
+                <div class="success-box">
+                    <strong>주제</strong><br />
+                    인간 내면의 불확실성과 자기 탐색. 거울은 자기 인식과 내적 대화의 은유로 기능하며 현실/상상의 경계를 흐린다.
+                </div>
+                <div class="info-box">
+                    <strong>연출</strong><br />
+                    김정민 감독은 최소한의 대사와 정적인 장면으로 ‘사유의 공간’을 만들고, 관객의 내면적 성찰을 유도한다.
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>핵심 메시지</strong><br />
+                선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.
+            </div>
+        </div>
+
+        <!-- 탭 6: 거울 속의 시간 평론 -->
+        <div id="tab6" class="tab-content">
+            <h2>🗣️ 영화 <em>거울 속의 시간</em> 평론가 의견</h2>
+            <div class="columns columns-2">
+                <div class="info-box">
+                    김민석 평론가: “최소한의 사건과 대사로 내면의 불확실성과 자기 탐색을 섬세하게 보여준다. 거울의 은유가
+                    현실과 상상의 경계를 흐리며 깊은 사유를 남긴다.”
+                </div>
+                <div class="success-box">
+                    박소연 평론가: “‘시간’과 ‘기억’을 감각적으로 풀어냈다. 거울 속 대화 장면이 몰입감을 높이고 미학과 절제가
+                    조화를 이룬다.”
+                </div>
+                <div class="warning-box">
+                    이정우 평론가: “거울은 회피했던 현실과 직면하게 하는 장치다. 마지막 귀환의 순간, 관객도 메시지를 체험한다.”
+                </div>
+                <div class="error-box">
+                    정혜진 평론가: “반복되는 시간과 정적인 공간이 내면 여행으로 이끈다. 거울 속 대화가 현대인의 자기 성찰을
+                    은유적으로 드러낸다.”
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 7: 언캐니 정보 -->
+        <div id="tab7" class="tab-content">
+            <h2>🧩 영화 <em>언캐니</em> 정보</h2>
+            <div class="columns columns-3">
+                <div class="info-box">
+                    <strong>기본 정보</strong><br />
+                    대한민국 제작 · 드라마<br />
+                    러닝타임 70분
+                </div>
+                <div class="success-box">
+                    <strong>개봉/성과</strong><br />
+                    2025년 11월 1일 개봉<br />
+                    평점 9.08점 · 누적 관객 1,725명
+                </div>
+                <div class="warning-box">
+                    <strong>제작진/출연</strong><br />
+                    감독: 김정민<br />
+                    출연: 김정민, 창욱
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 8: 언캐니 줄거리 -->
+        <div id="tab8" class="tab-content">
+            <h2>📖 영화 <em>언캐니</em> 줄거리</h2>
+            <div class="info-box">
+                20대 직장인 ‘창욱’은 반복적 루틴 속 퇴근길에 불 꺼진 가게 블라인드 너머 스쳐간 무언가를 목격한다.
+                주말에 찾은 그곳에서 ‘언캐니’라 불리는 얼굴이 비어 있고 내부에 거울이 삽입된 조각을 발견·구매한다.
+                집에서 작품을 마주한 그는 익숙함에 갇혀 자신의 얼굴과 내면을 외면해왔음을 깨닫고 눈물을 흘린다.
+                익숙함 속 낯섦과의 조우를 통해 내면을 성찰하고 새로운 감각을 얻으며 영화는 끝난다.
+            </div>
+        </div>
+
+        <!-- 탭 9: 언캐니 해석 -->
+        <div id="tab9" class="tab-content">
+            <h2>🧠 영화 <em>언캐니</em> 해석</h2>
+            <div class="columns columns-2">
+                <div class="success-box">
+                    <strong>개념적 토대</strong><br />
+                    프로이드의 ‘익숙함 속의 낯섦(언캐니)’에서 영감. 일상 속 낯선 계기를 통해 자기 대면과 감각의 회복을 탐구.
+                </div>
+                <div class="info-box">
+                    <strong>연출 의도</strong><br />
+                    지루한 루틴이 기괴함/아름다움으로 변환되는 순간을 체험하게 하여, 평범함 속 아름다움과 자기 인식을 재발견하도록 유도.
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 10: 언캐니 평론 -->
+        <div id="tab10" class="tab-content">
+            <h2>🗣️ 영화 <em>언캐니</em> 평론가 의견</h2>
+            <div class="columns columns-2">
+                <div class="info-box">
+                    김민석 평론가: 익숙한 일상 속 낯섦의 포착을 통해 관객을 자기 대면으로 이끈다.
+                </div>
+                <div class="success-box">
+                    박소연 평론가: 단조로운 일상을 기괴하고 아름다운 경험으로 전환, 조각상·거울 장면이 몰입감을 극대화.
+                </div>
+                <div class="warning-box">
+                    이정우 평론가: 익숙함/낯섦의 대비로 내면 성찰을 이끌며, 마지막 자기 대면이 인상적.
+                </div>
+                <div class="error-box">
+                    정혜진 평론가: 잔잔한 일상 속 작은 불편과 기괴함으로 사유를 촉발하는, 예술성과 심리 체험이 결합된 작품.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🎥 소개: 김정민 감독</p>
+        <p style="margin-top: 15px; opacity: 0.8;">© 2025 Director Jeongmin Kim. All rights reserved.</p>
+    </footer>
+
+    <!-- D-ID Agent -->
+    <script type="module">
+        console.log('🚀 D-ID Agent 초기화 시작...');
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = 'https://agent.d-id.com/v2/index.js';
+        script.setAttribute('data-mode', 'fabio');
+        script.setAttribute('data-client-key', 'Z29vZ2xlLW9hdXRoMnwxMTI3NjQ3MzA0NTM3NjA0MTgyMTI6d01EN0x6bFFFMmlZSk9nUHNacXll');
+        script.setAttribute('data-agent-id', 'v2_agt_80jV_9EA');
+        script.setAttribute('data-name', 'did-agent');
+        script.setAttribute('data-monitor', 'true');
+        script.setAttribute('data-orientation', 'horizontal');
+        script.setAttribute('data-position', 'right');
+        script.onload = () => { console.log('✅ D-ID Agent 로딩 완료!'); };
+        script.onerror = (e) => { console.error('❌ D-ID Agent 로딩 실패:', e); };
+        document.body.appendChild(script);
+    </script>
+
+    <script>
+        function openTab(tabId) {
+            const contents = document.getElementsByClassName('tab-content');
+            for (let content of contents) content.classList.remove('active');
+
+            const tabs = document.getElementsByClassName('tab');
+            for (let tab of tabs) tab.classList.remove('active');
+
+            document.getElementById(tabId).classList.add('active');
+            if (event && event.target) event.target.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+```
