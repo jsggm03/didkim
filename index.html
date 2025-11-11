@@ -42,14 +42,22 @@
     /* D-ID 위젯 위치 고정 */
     #did-agent{position:fixed!important;bottom:20px!important;right:20px!important;z-index:9999!important}
 
-    /* 퀴즈 카드 스타일 */
+    /* 퀴즈/결과 UI */
     .quiz-card{max-width:720px;margin:0 auto;padding:20px 22px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.06)}
     .quiz-card button{padding:.6rem 1rem;border-radius:10px;border:0;background:#667eea;color:#fff;font-weight:600;cursor:pointer}
     .quiz-card button:disabled{opacity:.6;cursor:not-allowed}
     #result{margin-top:10px}
     #result.success{color:#0a0}
     #result.error{color:#c00}
-    th, td { font-size:16px }
+
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse}
+    th,td{border:1px solid #e5e7eb;padding:10px;text-align:left;font-size:14px}
+    th{background:#f3f4f6}
+
+    .feed-note{margin-top:14px;font-size:13px;opacity:.8}
+    .btn{display:inline-block;padding:.5rem .8rem;border-radius:10px;background:#667eea;color:#fff;text-decoration:none;border:0;cursor:pointer}
+    .btn.secondary{background:#6b7280}
 
     @media (max-width:768px){
       header h1{font-size:1.8em}
@@ -135,7 +143,8 @@
         <div class="success-box"><strong>주제</strong><br/>인간 내면의 불확실성과 자기 탐색. 거울은 자기 인식과 내적 대화의 은유로 기능하며 현실/상상의 경계를 흐린다.</div>
         <div class="info-box"><strong>연출</strong><br/>최소한의 대사와 정적인 장면으로 ‘사유의 공간’을 만들고, 관객의 내면적 성찰을 유도.</div>
       </div>
-      <div class="warning-box"><strong>핵심 메시지</strong><br/>선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.</div>
+      <div class="warning-box"><strong>핵심 메시지</strong><br/>선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.
+      </div>
     </div>
 
     <!-- 탭 6: 거울 속의 시간 평론 -->
@@ -190,19 +199,23 @@
       </div>
     </div>
 
-    <!-- 퀴즈 탭 -->
+    <!-- ✅ 새 탭: 퀴즈 -->
     <div id="tab-quiz" class="tab-content">
       <h2>📝 간단한 퀴즈</h2>
       <div class="quiz-card">
         <form id="quiz-form">
+          <label>이름</label><br>
+          <input name="name" type="text" placeholder="이름을 입력하세요" required style="width:100%;padding:8px"><br><br>
+
           <label>1) 김정민 감독의 주요 작품 주제는?</label><br>
-          <label><input type="radio" name="q1" value="감정과 기록"> 감정과 기록</label><br>
+          <label><input type="radio" name="q1" value="감정과 기록" required> 감정과 기록</label><br>
           <label><input type="radio" name="q1" value="스포츠 다큐"> 스포츠 다큐</label><br>
           <label><input type="radio" name="q1" value="경제 분석"> 경제 분석</label><br>
           <label><input type="radio" name="q1" value="음식 리뷰"> 음식 리뷰</label><br><br>
 
-          <label>2) 앞으로 D-ID 아바타에게 하고 싶은 질문은?</label><br>
-          <textarea name="q2" placeholder="자유롭게 작성하세요" rows="4" style="width:100%"></textarea><br><br>
+          <!-- 🔄 주관식: 정답 '언캐니' -->
+          <label>2) 김정민 감독의 최신 영화 제목은 무엇인가?</label><br>
+          <input name="q2" type="text" placeholder="정답을 입력하세요 (예: 언캐니)" required style="width:100%;padding:8px"><br><br>
 
           <button type="submit">제출하기</button>
         </form>
@@ -210,27 +223,30 @@
       </div>
     </div>
 
-    <!-- 결과 탭 -->
+    <!-- ✅ 새 탭: 결과 -->
     <div id="tab-results" class="tab-content">
-      <h2>📊 최근 제출 결과</h2>
-      <div style="overflow:auto">
-        <table style="width:100%; border-collapse:collapse">
+      <h2>📊 제출 결과</h2>
+      <div style="margin-bottom:14px">
+        <button class="btn" id="btn-refresh">새로고침</button>
+        <a class="btn secondary" id="btn-download" href="#" download="quiz_results.json">JSON 다운로드</a>
+      </div>
+      <div class="table-wrap">
+        <table id="results-table">
           <thead>
             <tr>
-              <th style="text-align:left;border-bottom:1px solid #ddd;padding:8px">시간</th>
-              <th style="text-align:left;border-bottom:1px solid #ddd;padding:8px">q1</th>
-              <th style="text-align:left;border-bottom:1px solid #ddd;padding:8px">q2</th>
+              <th>시간</th>
+              <th>이름</th>
+              <th>q1</th>
+              <th>정오답(q1)</th>
+              <th>q2</th>
+              <th>정오답(q2)</th>
+              <th>점수</th>
             </tr>
           </thead>
-          <tbody id="results-body">
-            <tr><td colspan="3" style="padding:10px;color:#666">로딩 중…</td></tr>
-          </tbody>
+          <tbody><tr><td colspan="7">로딩 대기 중…</td></tr></tbody>
         </table>
       </div>
-      <p id="results-meta" style="margin-top:10px;opacity:.7"></p>
-      <div style="margin-top:10px;opacity:.7">
-        D-ID 지식용 텍스트: <code id="did-url"></code>
-      </div>
+      <p class="feed-note" id="feed-link"></p>
     </div>
   </div>
 
@@ -249,101 +265,141 @@
       document.getElementById(tabId).classList.add('active');
       if(e && e.currentTarget) e.currentTarget.classList.add('active');
       window.scrollTo({top:0,behavior:'smooth'});
+      // 결과 탭에 들어오면 자동 로드
+      if(tabId==='tab-results'){ loadResults(); }
     }
   </script>
 
-  <!-- 결과/제출 스크립트 -->
+  <!-- 퀴즈 제출 & 결과 로더 -->
   <script>
-    const WEBAPP_BASE = "https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec";
+    const FORM_TOKEN      = "JEONGMIN_SECRET_2025";
+    const ANSWER_Q2       = "언캐니"; // 프론트 임시 채점용(서버 채점 없을 때 표시 보정)
 
-    // 안전 출력
-    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])); }
-
-    // 결과 로드
-    async function loadResults(last=20){
-      const body = document.getElementById("results-body");
-      const meta = document.getElementById("results-meta");
-      const did = document.getElementById("did-url");
-      if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#666">로딩 중…</td></tr>`;
-      try{
-        const res = await fetch(`${WEBAPP_BASE}?last=${last}`);
-        const data = await res.json();
-        if(!data?.ok){ if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#c00">불러오기 실패</td></tr>`; return; }
-        if(!data.recent?.length){ if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#666">아직 제출이 없습니다</td></tr>`; if(meta) meta.textContent=""; return; }
-
-        if(body){
-          body.innerHTML = data.recent.map(r=>{
-            const ts = new Date(r.timestamp).toLocaleString();
-            const q1 = (r.q1 || "").replace(/\s+/g," ");
-            const q2 = (r.q2 || "").replace(/\s+/g," ");
-            return `<tr>
-              <td style="padding:8px;border-bottom:1px solid #eee">${ts}</td>
-              <td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(q1)}</td>
-              <td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(q2)}</td>
-            </tr>`;
-          }).join("");
-        }
-        if(meta) meta.textContent = `최근 ${data.count}개 표시 (자동 새로고침 30초)`;
-        if(did) did.textContent = `${WEBAPP_BASE}?format=txt&last=${last}`;
-      }catch(err){
-        if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#c00">에러: ${String(err)}</td></tr>`;
-      }
+    function norm(s){
+      return (s||"").toString().trim().replace(/\s+/g,"").toLowerCase();
     }
 
-    // 제출 성공 후 결과 갱신
-    function afterSubmitSuccess(){ loadResults(); }
-
-    // 페이지 로드 시 한번 + 30초마다(결과 탭이 활성일 때만)
-    document.addEventListener("DOMContentLoaded", ()=>{
-      loadResults();
-      setInterval(()=>{
-        const active = document.querySelector(".tab-content.active")?.id;
-        if(active === "tab-results") loadResults();
-      }, 30000);
-    });
-
-    // 퀴즈 제출 (폼-인코딩: 프리플라이트 없이 전송)
+    // 제출
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById("quiz-form");
-      if(!form) return;
-      const btn  = form.querySelector('button[type="submit"]');
-      const resP = document.getElementById("result");
+      if(form){
+        const resP = document.getElementById("result");
+        const btn  = form.querySelector('button[type="submit"]');
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = form.querySelector('input[name="name"]').value.trim();
+          const q1el = form.querySelector('input[name="q1"]:checked');
+          const q2   = form.querySelector('input[name="q2"]').value.trim();
+          if(!name || !q1el || !q2){ resP.textContent="이름, 1번, 2번을 모두 입력/선택해 주세요."; resP.className="error"; return; }
 
-        const q1el = document.querySelector('input[name="q1"]:checked');
-        if(!q1el){
-          resP.textContent = "1번 항목을 선택해 주세요."; resP.className="error"; return;
-        }
-        const q1 = q1el.value;
-        const q2 = document.querySelector('textarea[name="q2"]').value || "";
+          btn.disabled = true; btn.textContent = "전송 중…";
+          try{
+            const res = await fetch(APPS_SCRIPT_URL, {
+              method:"POST",
+              headers:{ "Content-Type":"application/json" },
+              body: JSON.stringify({ token: FORM_TOKEN, name, q1: q1el.value, q2 })
+            });
+            const data = await res.json().catch(()=>null);
 
-        btn.disabled = true; btn.textContent = "전송 중…";
-        try{
-          const res = await fetch(WEBAPP_BASE, {
-            method:"POST",
-            headers:{ "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8" },
-            body: new URLSearchParams({ q1, q2, token: "JEONGMIN_SECRET_2025" }).toString()
-          });
-          const data = await res.json().catch(()=>({}));
-          if(data?.ok){
-            resP.textContent = "제출되었습니다. 감사합니다!"; resP.className="success";
-            form.reset();
-            afterSubmitSuccess();
-          }else{
+            // 서버 응답(권장): q1_correct, q2_correct, score 제공
+            // 하위호환: correct(=q1), score(=0/1)만 올 수 있음 → 프론트에서 q2 임시 채점
+            const ok1 = (data && ("q1_correct" in data)) ? !!data.q1_correct
+                      : (data && ("correct" in data)) ? !!data.correct : null;
+            const ok2 = (data && ("q2_correct" in data)) ? !!data.q2_correct
+                      : (norm(q2) === norm(ANSWER_Q2)); // 서버 미구현시 프론트 임시 채점
+            const score = (data && ("score" in data)) ? data.score
+                        : ((ok1?1:0) + (ok2?1:0)); // 서버 미구현시 2문항 기준 가산
+
+            if(data && data.ok){
+              resP.innerHTML = `제출되었습니다. 감사합니다!<br>
+                이름: <b>${data.name || name}</b>
+                · 1번: <b>${data.q1 || (q1el && q1el.value) || ""}</b> → <b>${ok1 ? "정답" : "오답"}</b>
+                · 2번: <b>${q2}</b> → <b>${ok2 ? "정답" : "오답"}</b>
+                · 점수: <b>${score}</b>/2`;
+              resP.className="success";
+              form.reset();
+            }else{
+              resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
+            }
+          }catch(_){
             resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
+          }finally{
+            btn.disabled = false; btn.textContent = "제출하기";
           }
-        }catch{
-          resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
-        }finally{
-          btn.disabled = false; btn.textContent = "제출하기";
-        }
-      });
+        });
+      }
+
+      // 결과 탭 버튼들
+      const btnRefresh = document.getElementById('btn-refresh');
+      const btnDownload = document.getElementById('btn-download');
+      if(btnRefresh){ btnRefresh.addEventListener('click', loadResults); }
+      if(btnDownload){
+        btnDownload.addEventListener('click', async (e)=>{
+          e.preventDefault();
+          const url = APPS_SCRIPT_URL + "?last=200";
+          const res = await fetch(url);
+          const text = await res.text();
+          const blob = new Blob([text], {type:"application/json"});
+          const href = URL.createObjectURL(blob);
+          btnDownload.href = href;
+          btnDownload.click();
+          setTimeout(()=>URL.revokeObjectURL(href), 1000);
+        });
+      }
     });
+
+    // 결과 로드
+    async function loadResults(){
+      const tbody = document.querySelector("#results-table tbody");
+      const feedP = document.getElementById("feed-link");
+      if(!tbody) return;
+      tbody.innerHTML = `<tr><td colspan="7">로딩 중…</td></tr>`;
+      try{
+        const res = await fetch(APPS_SCRIPT_URL + "?last=50");
+        const data = await res.json();
+        if(data && data.ok && Array.isArray(data.recent)){
+          if(data.recent.length===0){
+            tbody.innerHTML = `<tr><td colspan="7">아직 제출이 없습니다.</td></tr>`;
+          }else{
+            const rows = data.recent.map(r=>{
+              const ts = r.timestamp ? new Date(r.timestamp) : null;
+              const tsfmt = ts ? ts.toLocaleString() : "";
+              const ok1 = (String(r.q1_correct)==="true" || r.q1_correct===true) ? "정답" : "오답";
+              // 서버가 q2_correct를 아직 안 주면 프론트에서 임시 계산
+              const ok2 = ("q2_correct" in r)
+                          ? ((String(r.q2_correct)==="true" || r.q2_correct===true) ? "정답" : "오답")
+                          : (norm(r.q2)==norm(ANSWER_Q2) ? "정답" : "오답");
+              const score = ("score" in r) ? r.score
+                           : ((ok1==="정답"?1:0) + (ok2==="정답"?1:0));
+              return `<tr>
+                <td>${tsfmt}</td>
+                <td>${(r.name||"")}</td>
+                <td>${(r.q1||"")}</td>
+                <td>${ok1}</td>
+                <td>${(r.q2||"")}</td>
+                <td>${ok2}</td>
+                <td>${score}</td>
+              </tr>`;
+            }).join("");
+            tbody.innerHTML = rows;
+          }
+        }else{
+          tbody.innerHTML = `<tr><td colspan="7">불러오기 실패</td></tr>`;
+        }
+      }catch(_){
+        tbody.innerHTML = `<tr><td colspan="7">불러오기 실패</td></tr>`;
+      }
+      // D-ID가 읽는 텍스트 피드 안내
+      const txtUrl = APPS_SCRIPT_URL + "?format=txt&last=200";
+      if(feedP){
+        feedP.innerHTML = `D-ID 지식용 텍스트: <a href="${txtUrl}" target="_blank" rel="noopener">${txtUrl}</a>`;
+      }
+    }
   </script>
 
-  <!-- D-ID Agent -->
+  <!-- D-ID Agent (임베드) -->
   <script type="module"
     src="https://agent.d-id.com/v2/index.js"
     data-mode="fabio"
@@ -356,3 +412,4 @@
   </script>
 </body>
 </html>
+
