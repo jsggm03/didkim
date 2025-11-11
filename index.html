@@ -18,19 +18,37 @@
     .tab-content{display:none;background:#fff;padding:40px;border-radius:0 15px 15px 15px;box-shadow:0 4px 6px rgba(0,0,0,0.1);margin-bottom:40px}
     .tab-content.active{display:block;animation:fadeIn .3s}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .tab-content h2{font-size:1.8em;margin-bottom:30px;color:#2c3e50}
+    .tab-content h3{font-size:1.3em;margin:25px 0 15px;color:#34495e}
+    .tab-content ul{margin-left:25px;margin-top:15px}
+    .tab-content li{margin-bottom:10px}
     .columns{display:grid;gap:30px;margin:30px 0}
     .columns-2{grid-template-columns:repeat(auto-fit,minmax(400px,1fr))}
     .columns-3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+    .columns-4{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
     .info-box,.success-box,.warning-box,.error-box{padding:25px;border-radius:12px}
     .info-box{background:#e7f3ff;border-left:4px solid #2196f3}
     .success-box{background:#d4edda;border-left:4px solid #28a745}
     .warning-box{background:#fff3cd;border-left:4px solid #ffc107}
     .error-box{background:#f8d7da;border-left:4px solid #dc3545}
+    .metric{text-align:center;padding:20px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:20px}
+    .metric-value{font-size:2.5em;font-weight:700;color:#667eea;margin-bottom:5px}
+    .metric-label{font-size:1em;color:#666}
+    .metric-delta{font-size:.9em;color:#28a745;margin-top:5px}
+    .progress{background:#e9ecef;border-radius:10px;height:30px;margin:15px 0;overflow:hidden;position:relative}
+    .progress-bar{background:linear-gradient(90deg,#667eea,#764ba2);height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;transition:width .6s ease}
     footer{background:#2c3e50;color:#fff;text-align:center;padding:30px 20px;margin-top:60px}
+    footer p{margin:5px 0}
+    /* D-ID 위젯의 위치를 보장 (SDK가 id를 주입함) */
     #did-agent{position:fixed!important;bottom:20px!important;right:20px!important;z-index:9999!important}
+    @media (max-width:768px){
+      header h1{font-size:1.8em}
+      .tab{padding:10px 15px;font-size:14px}
+      .tab-content{padding:20px}
+      .columns,.columns-2,.columns-3,.columns-4{grid-template-columns:1fr}
+    }
   </style>
 </head>
-
 <body>
   <header>
     <h1>🎬 김정민 감독 소개</h1>
@@ -49,23 +67,26 @@
       <button class="tab" onclick="openTab(event,'tab8')">언캐니 · 줄거리</button>
       <button class="tab" onclick="openTab(event,'tab9')">언캐니 · 해석</button>
       <button class="tab" onclick="openTab(event,'tab10')">언캐니 · 평론</button>
-
-      <!-- ✅ 새로 추가된 퀴즈 탭 -->
-      <button class="tab" onclick="openTab(event,'quizTab')"> 퀴즈</button>
     </div>
-
-    <!-- ✅ 기존 탭 내용: 김정민 감독 원본 HTML (내용 그대로) -->
 
     <!-- 탭 1: 프로필 -->
     <div id="tab1" class="tab-content active">
       <h2>👤 김정민 감독 프로필</h2>
       <div class="columns columns-2">
-        <div class="info-box"><strong>학력/전공</strong><br>차의과학대학교 심리학, 미디어커뮤니케이션 전공</div>
-        <div class="success-box"><strong>창작 성향</strong><br>이론 기반 시나리오 집필 · 실험 영화 제작</div>
+        <div class="info-box">
+          <strong>학력/전공</strong><br/>차의과학대학교 심리학, 미디어커뮤니케이션 전공
+        </div>
+        <div class="success-box">
+          <strong>창작 성향</strong><br/>예술 영화 애호가로서 이론 기반 시나리오 집필 및 일상 소재의 실험 영화 제작에 주력
+        </div>
       </div>
       <div class="columns columns-2">
-        <div class="warning-box"><strong>데뷔/주목</strong><br>22세에 <em>거울 속의 시간</em> 발표</div>
-        <div class="error-box"><strong>최근 행보</strong><br>신작 <em>언캐니</em> 개봉 예정</div>
+        <div class="warning-box">
+          <strong>데뷔/주목</strong><br/>22세에 영화 <em>거울 속의 시간</em> 발표로 주목
+        </div>
+        <div class="error-box">
+          <strong>최근 행보</strong><br/>신작 <em>언캐니</em> 개봉으로 명성 확장 중
+        </div>
       </div>
     </div>
 
@@ -74,11 +95,13 @@
       <h2>🎞️ 김정민 감독 필모그래피</h2>
       <div class="columns columns-2">
         <div class="info-box">
-          <strong>작품 목록</strong><br>
-          • 2024.07.25 <em>거울 속의 시간</em><br>
-          • 2025.11.01 <em>언캐니</em>
+          <strong>작품 목록</strong><br/>
+          • 2024. 07. 25. 영화 <em>거울 속의 시간</em><br/>
+          • 2025. 11. 01. 영화 <em>언캐니</em>
         </div>
-        <div class="success-box"><strong>주요 키워드</strong><br>자기 성찰 · 시간/기억 · 익숙함 속의 낯섦</div>
+        <div class="success-box">
+          <strong>주요 키워드</strong><br/>자기 성찰 · 시간/기억 · 일상 속 낯섦(언캐니) · 미니멀리즘
+        </div>
       </div>
     </div>
 
@@ -86,37 +109,53 @@
     <div id="tab3" class="tab-content">
       <h2>🪞 영화 <em>거울 속의 시간</em> 정보</h2>
       <div class="columns columns-3">
-        <div class="info-box"><strong>기본 정보</strong><br>예술·철학 드라마 · 러닝타임 65분</div>
-        <div class="success-box"><strong>평점/성과</strong><br>평점 8.7점 · 누적 관객 12,340명</div>
-        <div class="warning-box"><strong>출연</strong><br>미래: 한지윤 / 준호: 박도현 / 유진: 김서하</div>
+        <div class="info-box">
+          <strong>기본 정보</strong><br/>대한민국 제작 · 예술·철학 드라마<br/>러닝타임 65분 (단편)
+        </div>
+        <div class="success-box">
+          <strong>개봉/성과</strong><br/>2024년 7월 25일 개봉<br/>평점 8.7점 · 누적 관객 12,340명
+        </div>
+        <div class="warning-box">
+          <strong>제작진/출연</strong><br/>감독: 김정민<br/>출연: 한지윤(미래), 박도현(준호), 김서하(유진)
+        </div>
       </div>
     </div>
 
     <!-- 탭 4: 거울 속의 시간 줄거리 -->
     <div id="tab4" class="tab-content">
-      <h2>📖 줄거리</h2>
+      <h2>📖 영화 <em>거울 속의 시간</em> 줄거리</h2>
       <div class="info-box">
-        오래된 거울 속 다른 시간대의 ‘자신’과 대화하며 현재를 살아갈 용기를 얻는 이야기.
+        오래된 집 다락에서 깨진 거울을 발견한 ‘미래’는 거울 속 미묘히 다른 시간대의 ‘자신’을 마주한다.
+        매일 밤 이어지는 짧은 대화 속 질문—“너는 무엇을 두려워하고 있는가?”—은 과거 연인 준호, 친구 유진과의
+        관계를 다시 비추게 한다. 사건 중심 전개 대신 정적인 공간과 시간의 변화로 내면의 사유를 따라가게 하며,
+        마지막에 미래는 거울을 깨고 현재의 삶으로 걸어 들어간다.
       </div>
     </div>
 
-    <!-- 탭 5: 해석 -->
+    <!-- 탭 5: 거울 속의 시간 해석 -->
     <div id="tab5" class="tab-content">
-      <h2>🧠 해석</h2>
+      <h2>🧠 영화 <em>거울 속의 시간</em> 해석</h2>
       <div class="columns columns-2">
-        <div class="success-box"><strong>주제</strong><br>자기 성찰, 선택, 시간의 상대성</div>
-        <div class="info-box"><strong>연출</strong><br>정적인 장면을 통한 감정의 미세한 진동 표현</div>
+        <div class="success-box">
+          <strong>주제</strong><br/>인간 내면의 불확실성과 자기 탐색. 거울은 자기 인식과 내적 대화의 은유로 기능하며 현실/상상의 경계를 흐린다.
+        </div>
+        <div class="info-box">
+          <strong>연출</strong><br/>최소한의 대사와 정적인 장면으로 ‘사유의 공간’을 만들고, 관객의 내면적 성찰을 유도.
+        </div>
+      </div>
+      <div class="warning-box">
+        <strong>핵심 메시지</strong><br/>선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.
       </div>
     </div>
 
-    <!-- 탭 6: 평론 -->
+    <!-- 탭 6: 거울 속의 시간 평론 -->
     <div id="tab6" class="tab-content">
-      <h2>🗣️ 평론</h2>
+      <h2>🗣️ 영화 <em>거울 속의 시간</em> 평론가 의견</h2>
       <div class="columns columns-2">
-        <div class="info-box">“내면과 마주하는 순간을 절제된 연출로 담았다.” – 김민석 평론가</div>
-        <div class="success-box">“기억과 시간의 미학.” – 박소연 평론가</div>
-        <div class="warning-box">“정적인 공간과 침묵의 미학.” – 이정우 평론가</div>
-        <div class="error-box">“사유를 촉발하는 영화.” – 정혜진 평론가</div>
+        <div class="info-box">김민석: “내면의 불확실성과 자기 탐색을 섬세하게 보여준다. 거울의 은유가 현실과 상상의 경계를 흐린다.”</div>
+        <div class="success-box">박소연: “‘시간’과 ‘기억’을 감각적으로 풀어냈다. 대화 장면의 절제가 미학과 조화를 이룬다.”</div>
+        <div class="warning-box">이정우: “거울은 회피했던 현실과 직면하게 하는 장치. 마지막 귀환의 순간, 관객도 체험한다.”</div>
+        <div class="error-box">정혜진: “정적인 공간이 내면 여행으로 이끈다. 대화가 현대인의 자기 성찰을 은유적으로 드러낸다.”</div>
       </div>
     </div>
 
@@ -124,64 +163,41 @@
     <div id="tab7" class="tab-content">
       <h2>🧩 영화 <em>언캐니</em> 정보</h2>
       <div class="columns columns-3">
-        <div class="info-box"><strong>기본 정보</strong><br>드라마 · 러닝타임 70분</div>
-        <div class="success-box"><strong>성과</strong><br>평점 9.08점 · 누적 관객 1,725명</div>
-        <div class="warning-box"><strong>출연</strong><br>김정민, 창욱</div>
+        <div class="info-box"><strong>기본 정보</strong><br/>대한민국 제작 · 드라마<br/>러닝타임 70분</div>
+        <div class="success-box"><strong>개봉/성과</strong><br/>2025년 11월 1일 개봉<br/>평점 9.08점 · 누적 관객 1,725명</div>
+        <div class="warning-box"><strong>제작진/출연</strong><br/>감독: 김정민<br/>출연: 김정민, 창욱</div>
       </div>
     </div>
 
     <!-- 탭 8: 언캐니 줄거리 -->
     <div id="tab8" class="tab-content">
-      <h2>📖 줄거리</h2>
+      <h2>📖 영화 <em>언캐니</em> 줄거리</h2>
       <div class="info-box">
-        익숙한 일상 속에서 발견한 낯섦과 마주하는 이야기.
+        20대 직장인 ‘창욱’은 반복적 루틴 속 퇴근길에 불 꺼진 가게 블라인드 너머 스쳐간 무언가를 목격한다.
+        주말에 찾은 그곳에서 ‘언캐니’라 불리는 얼굴이 비어 있고 내부에 거울이 삽입된 조각을 발견·구매한다.
+        집에서 작품을 마주한 그는 익숙함에 갇혀 자신의 얼굴과 내면을 외면해왔음을 깨닫고 눈물을 흘린다.
+        익숙함 속 낯섦과의 조우를 통해 내면을 성찰하고 새로운 감각을 얻으며 영화는 끝난다.
       </div>
     </div>
 
     <!-- 탭 9: 언캐니 해석 -->
     <div id="tab9" class="tab-content">
-      <h2>🧠 해석</h2>
+      <h2>🧠 영화 <em>언캐니</em> 해석</h2>
       <div class="columns columns-2">
-        <div class="success-box">익숙함 속의 낯섦 (언캐니 개념)</div>
-        <div class="info-box">심리적 감각 회복과 자기 대면</div>
+        <div class="success-box"><strong>개념적 토대</strong><br/>프로이드의 ‘익숙함 속의 낯섦(언캐니)’에서 영감. 일상 속 낯선 계기를 통해 자기 대면과 감각의 회복을 탐구.</div>
+        <div class="info-box"><strong>연출 의도</strong><br/>지루한 루틴이 기괴함/아름다움으로 변환되는 순간을 체험하게 하여, 평범함 속 아름다움과 자기 인식을 재발견하도록 유도.</div>
       </div>
     </div>
 
     <!-- 탭 10: 언캐니 평론 -->
     <div id="tab10" class="tab-content">
-      <h2>🗣️ 평론</h2>
+      <h2>🗣️ 영화 <em>언캐니</em> 평론가 의견</h2>
       <div class="columns columns-2">
-        <div class="info-box">“일상이 낯선 경험으로 확장된다.” – 김민석</div>
-        <div class="success-box">“감각 회복의 영화.” – 박소연</div>
-        <div class="warning-box">“긴 여운을 남긴다.” – 이정우</div>
-        <div class="error-box">“예술성과 심리의 절묘한 결합.” – 정혜진</div>
+        <div class="info-box">김민석: 익숙한 일상 속 낯섦의 포착을 통해 관객을 자기 대면으로 이끈다.</div>
+        <div class="success-box">박소연: 단조로운 일상을 기괴하고 아름다운 경험으로 전환, 조각상·거울 장면이 몰입감을 극대화.</div>
+        <div class="warning-box">이정우: 익숙함/낯섦의 대비로 내면 성찰을 이끌며, 마지막 자기 대면이 인상적.</div>
+        <div class="error-box">정혜진: 잔잔한 일상 속 작은 불편과 기괴함으로 사유를 촉발하는, 예술성과 심리 체험이 결합된 작품.</div>
       </div>
-    </div>
-
-    <!-- ✅ 새로 추가된 퀴즈 탭 -->
-    <div id="quizTab" class="tab-content">
-      <h2>🧠 감독 이해도 퀴즈</h2>
-
-      <div style="margin:18px 0">
-        <p><strong>1. 김정민 감독의 첫 공개 영화는?</strong></p>
-        <label><input type="radio" name="q1" value="1"> 언캐니(Uncanny)</label><br>
-        <label><input type="radio" name="q1" value="2"> 거울 속의 시간</label><br>
-        <label><input type="radio" name="q1" value="3"> 미로에서</label><br>
-        <label><input type="radio" name="q1" value="4"> 사운드 오브 미</label><br>
-      </div>
-
-      <div style="margin:18px 0">
-        <p><strong>2. 감독의 작품 세계를 표현하는 키워드를 적어보세요.</strong></p>
-        <textarea id="q2" placeholder="예: 자기 성찰, 시간/기억, 익숙함 속의 낯섦"
-                  style="width:100%;height:90px"></textarea>
-      </div>
-
-      <button id="submitQuizBtn"
-              style="padding:10px 18px;border-radius:8px;border:0;background:#667eea;color:#fff;cursor:pointer">
-        제출하기
-      </button>
-
-      <div id="feedback" style="margin-top:16px;font-size:1.05em"></div>
     </div>
   </div>
 
@@ -190,64 +206,20 @@
     <p style="margin-top:15px;opacity:.8">© 2025 Director Jeongmin Kim. All rights reserved.</p>
   </footer>
 
-  <!-- ✅ 탭 전환 함수 -->
+  <!-- 탭 스위처: event를 명시적으로 전달 -->
   <script>
     function openTab(e, tabId){
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      const contents=document.getElementsByClassName('tab-content');
+      for(const c of contents) c.classList.remove('active');
+      const tabs=document.getElementsByClassName('tab');
+      for(const t of tabs) t.classList.remove('active');
       document.getElementById(tabId).classList.add('active');
-      e.currentTarget.classList.add('active');
+      if(e && e.currentTarget) e.currentTarget.classList.add('active');
       window.scrollTo({top:0,behavior:'smooth'});
     }
   </script>
 
-  <!-- ✅ 퀴즈 → localStorage 저장 + webhook 전송 -->
-  <script>
-    const WEBHOOK_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
-
-    const ANSWER_KEY = { q1: "2" };
-
-    function makeFeedback({q1, q2}) {
-      const correct = q1 === ANSWER_KEY.q1;
-      const line1 = correct ? "✅ 정답! 첫 영화는 '거울 속의 시간'입니다."
-                            : "❌ 오답입니다. 정답은 '거울 속의 시간'입니다.";
-      const line2 = q2 ? `💬 당신의 답변: “${q2}”` : "✍️ 2번은 비어 있습니다.";
-      return { html: `${line1}<br>${line2}`, correct };
-    }
-
-    async function sendToWebhook(payload){
-      try {
-        await fetch(WEBHOOK_URL, {
-          method:"POST",
-          headers:{ "Content-Type":"application/json" },
-          body: JSON.stringify(payload)
-        });
-      } catch(e){ console.error("Webhook Error:", e); }
-    }
-
-    document.getElementById("submitQuizBtn").addEventListener("click", async () => {
-      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
-      const q2 = document.getElementById("q2").value.trim();
-
-      if(!q1){ alert("첫 번째 문제를 선택해주세요!"); return; }
-
-      const { html, correct } = makeFeedback({ q1, q2 });
-      document.getElementById("feedback").innerHTML = html;
-
-      const data = {
-        timestamp: new Date().toISOString(),
-        answer_q1: q1,
-        answer_q2: q2,
-        correct,
-        did_summary: `응답자는 1번 질문에 ${q1}을 선택했고, 2번 질문에 "${q2}"라고 적었습니다.`
-      };
-
-      localStorage.setItem("quizResult", JSON.stringify(data));
-      await sendToWebhook(data);
-    });
-  </script>
-
-  <!-- ✅ D-ID Agent embed -->
+  <!-- D-ID Agent: 정민님이 준 embed code를 "직접" 삽입 -->
   <script type="module"
     src="https://agent.d-id.com/v2/index.js"
     data-mode="fabio"
@@ -258,6 +230,5 @@
     data-orientation="horizontal"
     data-position="right">
   </script>
-
 </body>
 </html>
