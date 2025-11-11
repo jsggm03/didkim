@@ -49,6 +49,7 @@
     #result{margin-top:10px}
     #result.success{color:#0a0}
     #result.error{color:#c00}
+    th, td { font-size:16px }
 
     @media (max-width:768px){
       header h1{font-size:1.8em}
@@ -76,8 +77,8 @@
       <button class="tab" onclick="openTab(event,'tab8')">언캐니 · 줄거리</button>
       <button class="tab" onclick="openTab(event,'tab9')">언캐니 · 해석</button>
       <button class="tab" onclick="openTab(event,'tab10')">언캐니 · 평론</button>
-      <!-- ✅ 새 탭: 퀴즈 -->
       <button class="tab" onclick="openTab(event,'tab-quiz')">퀴즈</button>
+      <button class="tab" onclick="openTab(event,'tab-results')">결과</button>
     </div>
 
     <!-- 탭 1: 프로필 -->
@@ -189,7 +190,7 @@
       </div>
     </div>
 
-    <!-- ✅ 새 탭: 퀴즈 -->
+    <!-- 퀴즈 탭 -->
     <div id="tab-quiz" class="tab-content">
       <h2>📝 간단한 퀴즈</h2>
       <div class="quiz-card">
@@ -206,6 +207,29 @@
           <button type="submit">제출하기</button>
         </form>
         <p id="result"></p>
+      </div>
+    </div>
+
+    <!-- 결과 탭 -->
+    <div id="tab-results" class="tab-content">
+      <h2>📊 최근 제출 결과</h2>
+      <div style="overflow:auto">
+        <table style="width:100%; border-collapse:collapse">
+          <thead>
+            <tr>
+              <th style="text-align:left;border-bottom:1px solid #ddd;padding:8px">시간</th>
+              <th style="text-align:left;border-bottom:1px solid #ddd;padding:8px">q1</th>
+              <th style="text-align:left;border-bottom:1px solid #ddd;padding:8px">q2</th>
+            </tr>
+          </thead>
+          <tbody id="results-body">
+            <tr><td colspan="3" style="padding:10px;color:#666">로딩 중…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p id="results-meta" style="margin-top:10px;opacity:.7"></p>
+      <div style="margin-top:10px;opacity:.7">
+        D-ID 지식용 텍스트: <code id="did-url"></code>
       </div>
     </div>
   </div>
@@ -228,44 +252,96 @@
     }
   </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById("quiz-form");
-  if(!form) return;
-  const btn  = form.querySelector('button[type="submit"]');
-  const resP = document.getElementById("result");
+  <!-- 결과/제출 스크립트 -->
+  <script>
+    const WEBAPP_BASE = "https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec";
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    // 안전 출력
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])); }
 
-    const q1el = document.querySelector('input[name="q1"]:checked');
-    if(!q1el){ resP.textContent = "1번 항목을 선택해 주세요."; return; }
+    // 결과 로드
+    async function loadResults(last=20){
+      const body = document.getElementById("results-body");
+      const meta = document.getElementById("results-meta");
+      const did = document.getElementById("did-url");
+      if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#666">로딩 중…</td></tr>`;
+      try{
+        const res = await fetch(`${WEBAPP_BASE}?last=${last}`);
+        const data = await res.json();
+        if(!data?.ok){ if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#c00">불러오기 실패</td></tr>`; return; }
+        if(!data.recent?.length){ if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#666">아직 제출이 없습니다</td></tr>`; if(meta) meta.textContent=""; return; }
 
-    const q1 = q1el.value;
-    const q2 = document.querySelector('textarea[name="q2"]').value || "";
-
-    btn.disabled = true; btn.textContent = "전송 중…";
-    try{
-      const res = await fetch("https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: new URLSearchParams({ q1, q2, token: "JEONGMIN_SECRET_2025" }).toString()
-      });
-      const data = await res.json().catch(()=>({}));
-      if(data?.ok){
-        resP.textContent = "제출되었습니다. 감사합니다!"; 
-        form.reset();
-      }else{
-        resP.textContent = "제출 실패. 다시 시도해주세요.";
+        if(body){
+          body.innerHTML = data.recent.map(r=>{
+            const ts = new Date(r.timestamp).toLocaleString();
+            const q1 = (r.q1 || "").replace(/\s+/g," ");
+            const q2 = (r.q2 || "").replace(/\s+/g," ");
+            return `<tr>
+              <td style="padding:8px;border-bottom:1px solid #eee">${ts}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(q1)}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(q2)}</td>
+            </tr>`;
+          }).join("");
+        }
+        if(meta) meta.textContent = `최근 ${data.count}개 표시 (자동 새로고침 30초)`;
+        if(did) did.textContent = `${WEBAPP_BASE}?format=txt&last=${last}`;
+      }catch(err){
+        if(body) body.innerHTML = `<tr><td colspan="3" style="padding:10px;color:#c00">에러: ${String(err)}</td></tr>`;
       }
-    }catch(err){
-      resP.textContent = "제출 실패. 다시 시도해주세요.";
-    }finally{
-      btn.disabled = false; btn.textContent = "제출하기";
     }
-  });
-});
-</script>
+
+    // 제출 성공 후 결과 갱신
+    function afterSubmitSuccess(){ loadResults(); }
+
+    // 페이지 로드 시 한번 + 30초마다(결과 탭이 활성일 때만)
+    document.addEventListener("DOMContentLoaded", ()=>{
+      loadResults();
+      setInterval(()=>{
+        const active = document.querySelector(".tab-content.active")?.id;
+        if(active === "tab-results") loadResults();
+      }, 30000);
+    });
+
+    // 퀴즈 제출 (폼-인코딩: 프리플라이트 없이 전송)
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById("quiz-form");
+      if(!form) return;
+      const btn  = form.querySelector('button[type="submit"]');
+      const resP = document.getElementById("result");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const q1el = document.querySelector('input[name="q1"]:checked');
+        if(!q1el){
+          resP.textContent = "1번 항목을 선택해 주세요."; resP.className="error"; return;
+        }
+        const q1 = q1el.value;
+        const q2 = document.querySelector('textarea[name="q2"]').value || "";
+
+        btn.disabled = true; btn.textContent = "전송 중…";
+        try{
+          const res = await fetch(WEBAPP_BASE, {
+            method:"POST",
+            headers:{ "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8" },
+            body: new URLSearchParams({ q1, q2, token: "JEONGMIN_SECRET_2025" }).toString()
+          });
+          const data = await res.json().catch(()=>({}));
+          if(data?.ok){
+            resP.textContent = "제출되었습니다. 감사합니다!"; resP.className="success";
+            form.reset();
+            afterSubmitSuccess();
+          }else{
+            resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
+          }
+        }catch{
+          resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
+        }finally{
+          btn.disabled = false; btn.textContent = "제출하기";
+        }
+      });
+    });
+  </script>
 
   <!-- D-ID Agent -->
   <script type="module"
