@@ -228,46 +228,44 @@
     }
   </script>
 
-  <!-- 퀴즈 제출 스크립트 (token은 본문에 담아 전송) -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById("quiz-form");
-      if(!form) return;
-      const btn  = form.querySelector('button[type="submit"]');
-      const resP = document.getElementById("result");
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById("quiz-form");
+  if(!form) return;
+  const btn  = form.querySelector('button[type="submit"]');
+  const resP = document.getElementById("result");
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        const q1el = document.querySelector('input[name="q1"]:checked');
-        if(!q1el){
-          resP.textContent = "1번 항목을 선택해 주세요."; resP.className="error"; return;
-        }
-        const q1 = q1el.value;
-        const q2 = document.querySelector('textarea[name="q2"]').value || "";
+    const q1el = document.querySelector('input[name="q1"]:checked');
+    if(!q1el){ resP.textContent = "1번 항목을 선택해 주세요."; return; }
 
-        btn.disabled = true; btn.textContent = "전송 중…";
-        try{
-          const res = await fetch("https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec", {
-            method:"POST",
-            headers:{ "Content-Type":"application/json" },
-            body: JSON.stringify({ q1, q2, token: "JEONGMIN_SECRET_2025" })
-          });
-          const data = await res.json().catch(()=>({}));
-          if(data?.ok){
-            resP.textContent = "제출되었습니다. 감사합니다!"; resP.className="success";
-            form.reset();
-          }else{
-            resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
-          }
-        }catch{
-          resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
-        }finally{
-          btn.disabled = false; btn.textContent = "제출하기";
-        }
+    const q1 = q1el.value;
+    const q2 = document.querySelector('textarea[name="q2"]').value || "";
+
+    btn.disabled = true; btn.textContent = "전송 중…";
+    try{
+      const res = await fetch("https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams({ q1, q2, token: "JEONGMIN_SECRET_2025" }).toString()
       });
-    });
-  </script>
+      const data = await res.json().catch(()=>({}));
+      if(data?.ok){
+        resP.textContent = "제출되었습니다. 감사합니다!"; 
+        form.reset();
+      }else{
+        resP.textContent = "제출 실패. 다시 시도해주세요.";
+      }
+    }catch(err){
+      resP.textContent = "제출 실패. 다시 시도해주세요.";
+    }finally{
+      btn.disabled = false; btn.textContent = "제출하기";
+    }
+  });
+});
+</script>
 
   <!-- D-ID Agent -->
   <script type="module"
