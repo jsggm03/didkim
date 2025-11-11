@@ -39,29 +39,8 @@
     .progress-bar{background:linear-gradient(90deg,#667eea,#764ba2);height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;transition:width .6s ease}
     footer{background:#2c3e50;color:#fff;text-align:center;padding:30px 20px;margin-top:60px}
     footer p{margin:5px 0}
-    /* D-ID 위젯 위치 고정 */
+    /* D-ID 위젯의 위치를 보장 (SDK가 id를 주입함) */
     #did-agent{position:fixed!important;bottom:20px!important;right:20px!important;z-index:9999!important}
-
-    /* 퀴즈/결과 UI */
-    .quiz-card{max-width:720px;margin:0 auto;padding:20px 22px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.06)}
-    .quiz-card button{padding:.6rem 1rem;border-radius:10px;border:0;background:#667eea;color:#fff;font-weight:600;cursor:pointer}
-    .quiz-card button:disabled{opacity:.6;cursor:not-allowed}
-    #result{margin-top:10px}
-    #result.success{color:#0a0}
-    #result.error{color:#c00}
-
-    .table-wrap{overflow:auto}
-    table{width:100%;border-collapse:collapse}
-    th,td{border:1px solid #e5e7eb;padding:10px;text-align:left;font-size:14px}
-    th{background:#f3f4f6}
-
-    .feed-note{margin-top:14px;font-size:13px;opacity:.8}
-    .btn{display:inline-block;padding:.5rem .8rem;border-radius:10px;background:#667eea;color:#fff;text-decoration:none;border:0;cursor:pointer}
-    .btn.secondary{background:#6b7280}
-
-    /* 결과 탭 버튼은 기본적으로 숨김(관리자 표시일 때만 보임) */
-    .tab[data-admin="1"]{display:none}
-
     @media (max-width:768px){
       header h1{font-size:1.8em}
       .tab{padding:10px 15px;font-size:14px}
@@ -88,21 +67,26 @@
       <button class="tab" onclick="openTab(event,'tab8')">언캐니 · 줄거리</button>
       <button class="tab" onclick="openTab(event,'tab9')">언캐니 · 해석</button>
       <button class="tab" onclick="openTab(event,'tab10')">언캐니 · 평론</button>
-      <button class="tab" onclick="openTab(event,'tab-quiz')">퀴즈</button>
-      <!-- 결과 탭 버튼(관리자 전용): 기본 숨김 -->
-      <button class="tab" data-admin="1" onclick="openTab(event,'tab-results')">결과</button>
     </div>
 
     <!-- 탭 1: 프로필 -->
     <div id="tab1" class="tab-content active">
       <h2>👤 김정민 감독 프로필</h2>
       <div class="columns columns-2">
-        <div class="info-box"><strong>학력/전공</strong><br/>차의과학대학교 심리학, 미디어커뮤니케이션 전공</div>
-        <div class="success-box"><strong>창작 성향</strong><br/>예술 영화 애호가로서 이론 기반 시나리오 집필 및 일상 소재의 실험 영화 제작에 주력</div>
+        <div class="info-box">
+          <strong>학력/전공</strong><br/>차의과학대학교 심리학, 미디어커뮤니케이션 전공
+        </div>
+        <div class="success-box">
+          <strong>창작 성향</strong><br/>예술 영화 애호가로서 이론 기반 시나리오 집필 및 일상 소재의 실험 영화 제작에 주력
+        </div>
       </div>
       <div class="columns columns-2">
-        <div class="warning-box"><strong>데뷔/주목</strong><br/>22세에 영화 <em>거울 속의 시간</em> 발표로 주목</div>
-        <div class="error-box"><strong>최근 행보</strong><br/>신작 <em>언캐니</em> 개봉으로 명성 확장 중</div>
+        <div class="warning-box">
+          <strong>데뷔/주목</strong><br/>22세에 영화 <em>거울 속의 시간</em> 발표로 주목
+        </div>
+        <div class="error-box">
+          <strong>최근 행보</strong><br/>신작 <em>언캐니</em> 개봉으로 명성 확장 중
+        </div>
       </div>
     </div>
 
@@ -115,7 +99,9 @@
           • 2024. 07. 25. 영화 <em>거울 속의 시간</em><br/>
           • 2025. 11. 01. 영화 <em>언캐니</em>
         </div>
-        <div class="success-box"><strong>주요 키워드</strong><br/>자기 성찰 · 시간/기억 · 일상 속 낯섦(언캐니) · 미니멀리즘</div>
+        <div class="success-box">
+          <strong>주요 키워드</strong><br/>자기 성찰 · 시간/기억 · 일상 속 낯섦(언캐니) · 미니멀리즘
+        </div>
       </div>
     </div>
 
@@ -123,9 +109,15 @@
     <div id="tab3" class="tab-content">
       <h2>🪞 영화 <em>거울 속의 시간</em> 정보</h2>
       <div class="columns columns-3">
-        <div class="info-box"><strong>기본 정보</strong><br/>대한민국 제작 · 예술·철학 드라마<br/>러닝타임 65분 (단편)</div>
-        <div class="success-box"><strong>개봉/성과</strong><br/>2024년 7월 25일 개봉<br/>평점 8.7점 · 누적 관객 12,340명</div>
-        <div class="warning-box"><strong>제작진/출연</strong><br/>감독: 김정민<br/>출연: 한지윤(미래), 박도현(준호), 김서하(유진)</div>
+        <div class="info-box">
+          <strong>기본 정보</strong><br/>대한민국 제작 · 예술·철학 드라마<br/>러닝타임 65분 (단편)
+        </div>
+        <div class="success-box">
+          <strong>개봉/성과</strong><br/>2024년 7월 25일 개봉<br/>평점 8.7점 · 누적 관객 12,340명
+        </div>
+        <div class="warning-box">
+          <strong>제작진/출연</strong><br/>감독: 김정민<br/>출연: 한지윤(미래), 박도현(준호), 김서하(유진)
+        </div>
       </div>
     </div>
 
@@ -144,10 +136,15 @@
     <div id="tab5" class="tab-content">
       <h2>🧠 영화 <em>거울 속의 시간</em> 해석</h2>
       <div class="columns columns-2">
-        <div class="success-box"><strong>주제</strong><br/>인간 내면의 불확실성과 자기 탐색. 거울은 자기 인식과 내적 대화의 은유로 기능하며 현실/상상의 경계를 흐린다.</div>
-        <div class="info-box"><strong>연출</strong><br/>최소한의 대사와 정적인 장면으로 ‘사유의 공간’을 만들고, 관객의 내면적 성찰을 유도.</div>
+        <div class="success-box">
+          <strong>주제</strong><br/>인간 내면의 불확실성과 자기 탐색. 거울은 자기 인식과 내적 대화의 은유로 기능하며 현실/상상의 경계를 흐린다.
+        </div>
+        <div class="info-box">
+          <strong>연출</strong><br/>최소한의 대사와 정적인 장면으로 ‘사유의 공간’을 만들고, 관객의 내면적 성찰을 유도.
+        </div>
       </div>
-      <div class="warning-box"><strong>핵심 메시지</strong><br/>선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.
+      <div class="warning-box">
+        <strong>핵심 메시지</strong><br/>선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.
       </div>
     </div>
 
@@ -202,56 +199,6 @@
         <div class="error-box">정혜진: 잔잔한 일상 속 작은 불편과 기괴함으로 사유를 촉발하는, 예술성과 심리 체험이 결합된 작품.</div>
       </div>
     </div>
-
-    <!-- ✅ 새 탭: 퀴즈 -->
-    <div id="tab-quiz" class="tab-content">
-      <h2>📝 간단한 퀴즈</h2>
-      <div class="quiz-card">
-        <form id="quiz-form">
-          <label>이름</label><br>
-          <input name="name" type="text" placeholder="이름을 입력하세요" required style="width:100%;padding:8px"><br><br>
-
-          <label>1) 김정민 감독의 주요 작품 주제는?</label><br>
-          <label><input type="radio" name="q1" value="감정과 기록" required> 감정과 기록</label><br>
-          <label><input type="radio" name="q1" value="스포츠 다큐"> 스포츠 다큐</label><br>
-          <label><input type="radio" name="q1" value="경제 분석"> 경제 분석</label><br>
-          <label><input type="radio" name="q1" value="음식 리뷰"> 음식 리뷰</label><br><br>
-
-          <!-- 🔄 주관식: 정답 '언캐니' -->
-          <label>2) 김정민 감독의 최신 영화 제목은 무엇인가?</label><br>
-          <input name="q2" type="text" placeholder="정답을 입력하세요 (예: 언캐니)" required style="width:100%;padding:8px"><br><br>
-
-          <button type="submit">제출하기</button>
-        </form>
-        <p id="result"></p>
-      </div>
-    </div>
-
-    <!-- ✅ 새 탭: 결과 (관리자 전용 UI, 기본 숨김) -->
-    <div id="tab-results" class="tab-content" hidden>
-      <h2>📊 제출 결과</h2>
-      <div style="margin-bottom:14px">
-        <button class="btn" id="btn-refresh">새로고침</button>
-        <a class="btn secondary" id="btn-download" href="#" download="quiz_results.json">JSON 다운로드</a>
-      </div>
-      <div class="table-wrap">
-        <table id="results-table">
-          <thead>
-            <tr>
-              <th>시간</th>
-              <th>이름</th>
-              <th>q1</th>
-              <th>정오답(q1)</th>
-              <th>q2</th>
-              <th>정오답(q2)</th>
-              <th>점수</th>
-            </tr>
-          </thead>
-          <tbody><tr><td colspan="7">로딩 대기 중…</td></tr></tbody>
-        </table>
-      </div>
-      <p class="feed-note" id="feed-link"></p>
-    </div>
   </div>
 
   <footer>
@@ -259,168 +206,20 @@
     <p style="margin-top:15px;opacity:.8">© 2025 Director Jeongmin Kim. All rights reserved.</p>
   </footer>
 
-  <!-- 탭 스위처 -->
+  <!-- 탭 스위처: event를 명시적으로 전달 -->
   <script>
     function openTab(e, tabId){
       const contents=document.getElementsByClassName('tab-content');
       for(const c of contents) c.classList.remove('active');
       const tabs=document.getElementsByClassName('tab');
       for(const t of tabs) t.classList.remove('active');
-      const target = document.getElementById(tabId);
-      if(target){ target.classList.add('active'); target.removeAttribute('hidden'); }
+      document.getElementById(tabId).classList.add('active');
       if(e && e.currentTarget) e.currentTarget.classList.add('active');
       window.scrollTo({top:0,behavior:'smooth'});
-      if(tabId==='tab-results'){ loadResults(); }
-    }
-
-    // 관리자 모드 판별: ?admin=1 또는 #admin
-    function isAdminView() {
-      const usp = new URLSearchParams(location.search);
-      return usp.get('admin') === '1' || location.hash.replace('#','') === 'admin';
-    }
-
-    // 관리자일 때만 "결과" 탭 버튼/콘텐츠 표시
-    document.addEventListener('DOMContentLoaded', () => {
-      if (isAdminView()) {
-        document.querySelectorAll('.tab[data-admin="1"]').forEach(el => el.style.display = '');
-        const resultsTab = document.getElementById('tab-results');
-        if (resultsTab) resultsTab.hidden = false;
-      }
-    });
-  </script>
-
-  <!-- 퀴즈 제출 & 결과 로더 -->
-  <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec";
-    const FORM_TOKEN      = "JEONGMIN_SECRET_2025";
-    const ANSWER_Q2       = "언캐니"; // 프론트 임시 채점용(서버 채점 없을 때 표시 보정)
-
-    function norm(s){
-      return (s||"").toString().trim().replace(/\s+/g,"").toLowerCase();
-    }
-
-    // 제출
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById("quiz-form");
-      if(form){
-        const resP = document.getElementById("result");
-        const btn  = form.querySelector('button[type="submit"]');
-
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const name = form.querySelector('input[name="name"]').value.trim();
-          const q1el = form.querySelector('input[name="q1"]:checked');
-          const q2   = form.querySelector('input[name="q2"]').value.trim();
-          if(!name || !q1el || !q2){ resP.textContent="이름, 1번, 2번을 모두 입력/선택해 주세요."; resP.className="error"; return; }
-
-          btn.disabled = true; btn.textContent = "전송 중…";
-          try{
-            const res = await fetch(APPS_SCRIPT_URL, {
-              method:"POST",
-              headers:{ "Content-Type":"application/json" },
-              body: JSON.stringify({ token: FORM_TOKEN, name, q1: q1el.value, q2 })
-            });
-            const raw = await res.text();
-            let data = null; try{ data = JSON.parse(raw); }catch(_){}
-
-            const ok1 = (data && ("q1_correct" in data)) ? !!data.q1_correct
-                      : (data && ("correct" in data)) ? !!data.correct : null;
-            const ok2 = (data && ("q2_correct" in data)) ? !!data.q2_correct
-                      : (norm(q2) === norm(ANSWER_Q2));
-            const score = (data && ("score" in data)) ? data.score
-                        : ((ok1?1:0) + (ok2?1:0));
-
-            if(data && data.ok){
-              resP.innerHTML = `제출되었습니다. 감사합니다!<br>
-                이름: <b>${data.name || name}</b>
-                · 1번: <b>${data.q1 || (q1el && q1el.value) || ""}</b> → <b>${ok1 ? "정답" : "오답"}</b>
-                · 2번: <b>${q2}</b> → <b>${ok2 ? "정답" : "오답"}</b>
-                · 점수: <b>${score}</b>/2`;
-              resP.className="success";
-              form.reset();
-            }else{
-              resP.textContent = "제출 실패. " + (data?.error ? `서버: ${data.error}` : `응답: ${raw}`);
-              resP.className="error";
-            }
-          }catch(err){
-            resP.textContent = "제출 실패(네트워크). " + String(err);
-            resP.className="error";
-          }finally{
-            btn.disabled = false; btn.textContent = "제출하기";
-          }
-        });
-      }
-
-      // 결과 탭 버튼들(관리자 모드일 때만 동작)
-      if (isAdminView()) {
-        const btnRefresh = document.getElementById('btn-refresh');
-        const btnDownload = document.getElementById('btn-download');
-        if(btnRefresh){ btnRefresh.addEventListener('click', loadResults); }
-        if(btnDownload){
-          btnDownload.addEventListener('click', async (e)=>{
-            e.preventDefault();
-            const url = APPS_SCRIPT_URL + "?last=200";
-            const res = await fetch(url);
-            const text = await res.text();
-            const blob = new Blob([text], {type:"application/json"});
-            const href = URL.createObjectURL(blob);
-            btnDownload.href = href;
-            btnDownload.click();
-            setTimeout(()=>URL.revokeObjectURL(href), 1000);
-          });
-        }
-      }
-    });
-
-    // 결과 로드(관리자 보기)
-    async function loadResults(){
-      const tbody = document.querySelector("#results-table tbody");
-      const feedP = document.getElementById("feed-link");
-      if(!tbody) return;
-      tbody.innerHTML = `<tr><td colspan="7">로딩 중…</td></tr>`;
-      try{
-        const res = await fetch(APPS_SCRIPT_URL + "?last=50");
-        const data = await res.json();
-        if(data && data.ok && Array.isArray(data.recent)){
-          if(data.recent.length===0){
-            tbody.innerHTML = `<tr><td colspan="7">아직 제출이 없습니다.</td></tr>`;
-          }else{
-            const rows = data.recent.map(r=>{
-              const ts = r.timestamp ? new Date(r.timestamp) : null;
-              const tsfmt = ts ? ts.toLocaleString() : "";
-              const ok1 = (String(r.q1_correct)==="true" || r.q1_correct===true) ? "정답" : "오답";
-              const ok2 = ("q2_correct" in r)
-                          ? ((String(r.q2_correct)==="true" || r.q2_correct===true) ? "정답" : "오답")
-                          : (norm(r.q2)==norm(ANSWER_Q2) ? "정답" : "오답");
-              const score = ("score" in r) ? r.score
-                           : ((ok1==="정답"?1:0) + (ok2==="정답"?1:0));
-              return `<tr>
-                <td>${tsfmt}</td>
-                <td>${(r.name||"")}</td>
-                <td>${(r.q1||"")}</td>
-                <td>${ok1}</td>
-                <td>${(r.q2||"")}</td>
-                <td>${ok2}</td>
-                <td>${score}</td>
-              </tr>`;
-            }).join("");
-            tbody.innerHTML = rows;
-          }
-        }else{
-          tbody.innerHTML = `<tr><td colspan="7">불러오기 실패</td></tr>`;
-        }
-      }catch(_){
-        tbody.innerHTML = `<tr><td colspan="7">불러오기 실패</td></tr>`;
-      }
-      // D-ID용 텍스트 피드 안내(관리자만 표시)
-      const txtUrl = APPS_SCRIPT_URL + "?format=txt&last=200";
-      if(feedP){
-        feedP.innerHTML = `D-ID 지식용 텍스트: <a href="${txtUrl}" target="_blank" rel="noopener">${txtUrl}</a>`;
-      }
     }
   </script>
 
-  <!-- D-ID Agent (임베드) -->
+  <!-- D-ID Agent: 정민님이 준 embed code를 "직접" 삽입 -->
   <script type="module"
     src="https://agent.d-id.com/v2/index.js"
     data-mode="fabio"
