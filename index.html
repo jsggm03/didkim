@@ -254,23 +254,27 @@
 </div>
 
 <script>
-document.getElementById("quiz-form").addEventListener("submit", function(e) {
+document.getElementById("quiz-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const q1 = document.querySelector('input[name="q1"]:checked')?.value;
-  const q2 = document.querySelector('textarea[name="q2"]').value;
+  const q1 = document.querySelector('input[name="q1"]:checked')?.value || "";
+  const q2 = document.querySelector('textarea[name="q2"]').value || "";
 
-  fetch("YOUR_GOOGLE_SCRIPT_URL", {
-    method: "POST",
-    body: JSON.stringify({ q1, q2 }),
-    headers: { "Content-Type": "application/json" },
-  })
-  .then(res => res.text())
-  .then(() => {
-    document.getElementById("result").innerText = "제출되었습니다. 감사합니다!";
-  })
-  .catch(() => {
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Token": "JEONGMIN_SECRET_2025"  // ⬅️ Apps Script에서 사용하는 토큰
+      },
+      body: JSON.stringify({ q1, q2 })
+    });
+
+    const data = await res.json().catch(() => ({}));
+    document.getElementById("result").innerText =
+      data?.ok ? "제출되었습니다. 감사합니다!" : "제출 실패. 다시 시도해주세요.";
+  } catch (err) {
     document.getElementById("result").innerText = "제출 실패. 다시 시도해주세요.";
-  });
+  }
 });
 </script>
