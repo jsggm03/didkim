@@ -232,3 +232,45 @@
   </script>
 </body>
 </html>
+
+<div id="quiz-container">
+  <h2>🎯 간단한 퀴즈</h2>
+
+  <form id="quiz-form">
+
+    <label>1) 김정민 감독의 주요 작품 주제는?</label><br>
+    <input type="radio" name="q1" value="감정과 기록"> 감정과 기록<br>
+    <input type="radio" name="q1" value="스포츠 다큐"> 스포츠 다큐<br>
+    <input type="radio" name="q1" value="경제 분석"> 경제 분석<br>
+    <input type="radio" name="q1" value="음식 리뷰"> 음식 리뷰<br><br>
+
+    <label>2) 앞으로 D-ID 아바타에게 하고 싶은 질문은?</label><br>
+    <textarea name="q2" placeholder="자유롭게 작성하세요" rows="4"></textarea><br><br>
+
+    <button type="submit">제출하기</button>
+  </form>
+
+  <p id="result"></p>
+</div>
+
+<script>
+document.getElementById("quiz-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+  const q2 = document.querySelector('textarea[name="q2"]').value;
+
+  fetch("YOUR_GOOGLE_SCRIPT_URL", {
+    method: "POST",
+    body: JSON.stringify({ q1, q2 }),
+    headers: { "Content-Type": "application/json" },
+  })
+  .then(res => res.text())
+  .then(() => {
+    document.getElementById("result").innerText = "제출되었습니다. 감사합니다!";
+  })
+  .catch(() => {
+    document.getElementById("result").innerText = "제출 실패. 다시 시도해주세요.";
+  });
+});
+</script>
