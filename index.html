@@ -39,8 +39,17 @@
     .progress-bar{background:linear-gradient(90deg,#667eea,#764ba2);height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;transition:width .6s ease}
     footer{background:#2c3e50;color:#fff;text-align:center;padding:30px 20px;margin-top:60px}
     footer p{margin:5px 0}
-    /* D-ID 위젯의 위치를 보장 (SDK가 id를 주입함) */
+    /* D-ID 위젯 위치 고정 */
     #did-agent{position:fixed!important;bottom:20px!important;right:20px!important;z-index:9999!important}
+
+    /* 퀴즈 카드 스타일 (가독성 업) */
+    .quiz-card{max-width:720px;margin:0 auto;padding:20px 22px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+    .quiz-card button{padding:.6rem 1rem;border-radius:10px;border:0;background:#667eea;color:#fff;font-weight:600;cursor:pointer}
+    .quiz-card button:disabled{opacity:.6;cursor:not-allowed}
+    #result{margin-top:10px}
+    #result.success{color:#0a0}
+    #result.error{color:#c00}
+
     @media (max-width:768px){
       header h1{font-size:1.8em}
       .tab{padding:10px 15px;font-size:14px}
@@ -67,26 +76,20 @@
       <button class="tab" onclick="openTab(event,'tab8')">언캐니 · 줄거리</button>
       <button class="tab" onclick="openTab(event,'tab9')">언캐니 · 해석</button>
       <button class="tab" onclick="openTab(event,'tab10')">언캐니 · 평론</button>
+      <!-- ✅ 새 탭: 퀴즈 -->
+      <button class="tab" onclick="openTab(event,'tab-quiz')">퀴즈</button>
     </div>
 
     <!-- 탭 1: 프로필 -->
     <div id="tab1" class="tab-content active">
       <h2>👤 김정민 감독 프로필</h2>
       <div class="columns columns-2">
-        <div class="info-box">
-          <strong>학력/전공</strong><br/>차의과학대학교 심리학, 미디어커뮤니케이션 전공
-        </div>
-        <div class="success-box">
-          <strong>창작 성향</strong><br/>예술 영화 애호가로서 이론 기반 시나리오 집필 및 일상 소재의 실험 영화 제작에 주력
-        </div>
+        <div class="info-box"><strong>학력/전공</strong><br/>차의과학대학교 심리학, 미디어커뮤니케이션 전공</div>
+        <div class="success-box"><strong>창작 성향</strong><br/>예술 영화 애호가로서 이론 기반 시나리오 집필 및 일상 소재의 실험 영화 제작에 주력</div>
       </div>
       <div class="columns columns-2">
-        <div class="warning-box">
-          <strong>데뷔/주목</strong><br/>22세에 영화 <em>거울 속의 시간</em> 발표로 주목
-        </div>
-        <div class="error-box">
-          <strong>최근 행보</strong><br/>신작 <em>언캐니</em> 개봉으로 명성 확장 중
-        </div>
+        <div class="warning-box"><strong>데뷔/주목</strong><br/>22세에 영화 <em>거울 속의 시간</em> 발표로 주목</div>
+        <div class="error-box"><strong>최근 행보</strong><br/>신작 <em>언캐니</em> 개봉으로 명성 확장 중</div>
       </div>
     </div>
 
@@ -99,9 +102,7 @@
           • 2024. 07. 25. 영화 <em>거울 속의 시간</em><br/>
           • 2025. 11. 01. 영화 <em>언캐니</em>
         </div>
-        <div class="success-box">
-          <strong>주요 키워드</strong><br/>자기 성찰 · 시간/기억 · 일상 속 낯섦(언캐니) · 미니멀리즘
-        </div>
+        <div class="success-box"><strong>주요 키워드</strong><br/>자기 성찰 · 시간/기억 · 일상 속 낯섦(언캐니) · 미니멀리즘</div>
       </div>
     </div>
 
@@ -109,15 +110,9 @@
     <div id="tab3" class="tab-content">
       <h2>🪞 영화 <em>거울 속의 시간</em> 정보</h2>
       <div class="columns columns-3">
-        <div class="info-box">
-          <strong>기본 정보</strong><br/>대한민국 제작 · 예술·철학 드라마<br/>러닝타임 65분 (단편)
-        </div>
-        <div class="success-box">
-          <strong>개봉/성과</strong><br/>2024년 7월 25일 개봉<br/>평점 8.7점 · 누적 관객 12,340명
-        </div>
-        <div class="warning-box">
-          <strong>제작진/출연</strong><br/>감독: 김정민<br/>출연: 한지윤(미래), 박도현(준호), 김서하(유진)
-        </div>
+        <div class="info-box"><strong>기본 정보</strong><br/>대한민국 제작 · 예술·철학 드라마<br/>러닝타임 65분 (단편)</div>
+        <div class="success-box"><strong>개봉/성과</strong><br/>2024년 7월 25일 개봉<br/>평점 8.7점 · 누적 관객 12,340명</div>
+        <div class="warning-box"><strong>제작진/출연</strong><br/>감독: 김정민<br/>출연: 한지윤(미래), 박도현(준호), 김서하(유진)</div>
       </div>
     </div>
 
@@ -136,16 +131,10 @@
     <div id="tab5" class="tab-content">
       <h2>🧠 영화 <em>거울 속의 시간</em> 해석</h2>
       <div class="columns columns-2">
-        <div class="success-box">
-          <strong>주제</strong><br/>인간 내면의 불확실성과 자기 탐색. 거울은 자기 인식과 내적 대화의 은유로 기능하며 현실/상상의 경계를 흐린다.
-        </div>
-        <div class="info-box">
-          <strong>연출</strong><br/>최소한의 대사와 정적인 장면으로 ‘사유의 공간’을 만들고, 관객의 내면적 성찰을 유도.
-        </div>
+        <div class="success-box"><strong>주제</strong><br/>인간 내면의 불확실성과 자기 탐색. 거울은 자기 인식과 내적 대화의 은유로 기능하며 현실/상상의 경계를 흐린다.</div>
+        <div class="info-box"><strong>연출</strong><br/>최소한의 대사와 정적인 장면으로 ‘사유의 공간’을 만들고, 관객의 내면적 성찰을 유도.</div>
       </div>
-      <div class="warning-box">
-        <strong>핵심 메시지</strong><br/>선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.
-      </div>
+      <div class="warning-box"><strong>핵심 메시지</strong><br/>선택·기억·시간의 상대성에 대한 사유를 통해 단순 시청을 넘어 자기 성찰을 촉발하는 체험적 작품.</div>
     </div>
 
     <!-- 탭 6: 거울 속의 시간 평론 -->
@@ -199,6 +188,26 @@
         <div class="error-box">정혜진: 잔잔한 일상 속 작은 불편과 기괴함으로 사유를 촉발하는, 예술성과 심리 체험이 결합된 작품.</div>
       </div>
     </div>
+
+    <!-- ✅ 새 탭: 퀴즈 -->
+    <div id="tab-quiz" class="tab-content">
+      <h2>📝 간단한 퀴즈</h2>
+      <div class="quiz-card">
+        <form id="quiz-form">
+          <label>1) 김정민 감독의 주요 작품 주제는?</label><br>
+          <label><input type="radio" name="q1" value="감정과 기록"> 감정과 기록</label><br>
+          <label><input type="radio" name="q1" value="스포츠 다큐"> 스포츠 다큐</label><br>
+          <label><input type="radio" name="q1" value="경제 분석"> 경제 분석</label><br>
+          <label><input type="radio" name="q1" value="음식 리뷰"> 음식 리뷰</label><br><br>
+
+          <label>2) 앞으로 D-ID 아바타에게 하고 싶은 질문은?</label><br>
+          <textarea name="q2" placeholder="자유롭게 작성하세요" rows="4" style="width:100%"></textarea><br><br>
+
+          <button type="submit">제출하기</button>
+        </form>
+        <p id="result"></p>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -206,7 +215,7 @@
     <p style="margin-top:15px;opacity:.8">© 2025 Director Jeongmin Kim. All rights reserved.</p>
   </footer>
 
-  <!-- 탭 스위처: event를 명시적으로 전달 -->
+  <!-- 탭 스위처 -->
   <script>
     function openTab(e, tabId){
       const contents=document.getElementsByClassName('tab-content');
@@ -219,7 +228,48 @@
     }
   </script>
 
-  <!-- D-ID Agent: 정민님이 준 embed code를 "직접" 삽입 -->
+  <!-- 퀴즈 제출 스크립트 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById("quiz-form");
+      if(!form) return;
+      const btn  = form.querySelector('button[type="submit"]');
+      const resP = document.getElementById("result");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const q1el = document.querySelector('input[name="q1"]:checked');
+        if(!q1el){
+          resP.textContent = "1번 항목을 선택해 주세요."; resP.className="error"; return;
+        }
+        const q1 = q1el.value;
+        const q2 = document.querySelector('textarea[name="q2"]').value || "";
+
+        btn.disabled = true; btn.textContent = "전송 중…";
+        try{
+          const res = await fetch("https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec", {
+            method:"POST",
+            headers:{ "Content-Type":"application/json", "X-Token":"JEONGMIN_SECRET_2025" },
+            body: JSON.stringify({ q1, q2 })
+          });
+          const data = await res.json().catch(()=>({}));
+          if(data?.ok){
+            resP.textContent = "제출되었습니다. 감사합니다!"; resP.className="success";
+            form.reset();
+          }else{
+            resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
+          }
+        }catch{
+          resP.textContent = "제출 실패. 다시 시도해주세요."; resP.className="error";
+        }finally{
+          btn.disabled = false; btn.textContent = "제출하기";
+        }
+      });
+    });
+  </script>
+
+  <!-- D-ID Agent -->
   <script type="module"
     src="https://agent.d-id.com/v2/index.js"
     data-mode="fabio"
@@ -232,49 +282,3 @@
   </script>
 </body>
 </html>
-
-<div id="quiz-container">
-  <h2>🎯 간단한 퀴즈</h2>
-
-  <form id="quiz-form">
-
-    <label>1) 김정민 감독의 주요 작품 주제는?</label><br>
-    <input type="radio" name="q1" value="감정과 기록"> 감정과 기록<br>
-    <input type="radio" name="q1" value="스포츠 다큐"> 스포츠 다큐<br>
-    <input type="radio" name="q1" value="경제 분석"> 경제 분석<br>
-    <input type="radio" name="q1" value="음식 리뷰"> 음식 리뷰<br><br>
-
-    <label>2) 앞으로 D-ID 아바타에게 하고 싶은 질문은?</label><br>
-    <textarea name="q2" placeholder="자유롭게 작성하세요" rows="4"></textarea><br><br>
-
-    <button type="submit">제출하기</button>
-  </form>
-
-  <p id="result"></p>
-</div>
-
-<script>
-document.getElementById("quiz-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const q1 = document.querySelector('input[name="q1"]:checked')?.value || "";
-  const q2 = document.querySelector('textarea[name="q2"]').value || "";
-
-  try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbz0BHrjWWAl9iyK8sir-euK4vogyeBgC_4_m0PNIlsqbQjqQp28Tc-qK1LZjKBPzA9KaQ/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Token": "JEONGMIN_SECRET_2025"  // ⬅️ Apps Script에서 사용하는 토큰
-      },
-      body: JSON.stringify({ q1, q2 })
-    });
-
-    const data = await res.json().catch(() => ({}));
-    document.getElementById("result").innerText =
-      data?.ok ? "제출되었습니다. 감사합니다!" : "제출 실패. 다시 시도해주세요.";
-  } catch (err) {
-    document.getElementById("result").innerText = "제출 실패. 다시 시도해주세요.";
-  }
-});
-</script>
